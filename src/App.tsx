@@ -50,18 +50,12 @@ function PortalRedirect() {
 function MainApp() {
   const { user, login, logout } = useAuth();
 
-  if (!user) {
-    return <Login onLogin={login} />;
-  }
-
   return (
     <BrowserRouter>
-      <header className="flex justify-between items-center p-4 bg-blue-600 text-white">
-        <span>Bem-vindo, {user.name} ({user.role})</span>
-        <button onClick={logout} className="bg-white text-blue-600 px-3 py-1 rounded">Sair</button>
-      </header>
       <Routes>
-        <Route path="/" element={<PortalRedirect />} />
+        <Route path="/" element={<Index />} />
+        <Route path="/login" element={<Login onLogin={login} />} />
+        <Route path="/portal" element={<PortalRedirect />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/professor" element={<ProfessorPage />} />
         <Route path="/aluno" element={<AlunoPage />} />
