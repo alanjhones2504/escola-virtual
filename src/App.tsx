@@ -2,26 +2,81 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import Login from "./pages/Login";
+import RequireRole from "./components/RequireRole";
+import AdminDashboard from "./pages/AdminDashboard";
+import ProfessorDashboard from "./pages/ProfessorDashboard";
+import AlunoDashboard from "./pages/AlunoDashboard";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+function AdminPage() {
+  return (
+    <RequireRole allowed="admin">
+      <AdminDashboard />
+    </RequireRole>
+  );
+}
+
+function ProfessorPage() {
+  return (
+    <RequireRole allowed="professor">
+      <ProfessorDashboard />
+    </RequireRole>
+  );
+}
+
+function AlunoPage() {
+  return (
+    <RequireRole allowed="aluno">
+      <AlunoDashboard />
+    </RequireRole>
+  );
+}
+
+function PortalRedirect() {
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" />;
+  if (user.role === "admin") return <Navigate to="/admin" />;
+  if (user.role === "professor") return <Navigate to="/professor" />;
+  if (user.role === "aluno") return <Navigate to="/aluno" />;
+  return <Navigate to="/login" />;
+}
+
+function MainApp() {
+  const { user, login, logout } = useAuth();
+
+  if (!user) {
+    return <Login onLogin={login} />;
+  }
+
+  return (
+    <BrowserRouter>
+      <header className="flex justify-between items-center p-4 bg-blue-600 text-white">
+        <span>Bem-vindo, {user.name} ({user.role})</span>
+        <button onClick={logout} className="bg-white text-blue-600 px-3 py-1 rounded">Sair</button>
+      </header>
+      <Routes>
+        <Route path="/" element={<PortalRedirect />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/professor" element={<ProfessorPage />} />
+        <Route path="/aluno" element={<AlunoPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <MainApp />
+    </AuthProvider>
+  );
+}
 
 export default App;
