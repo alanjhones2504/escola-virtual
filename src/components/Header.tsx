@@ -6,107 +6,104 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 bg-background/80 backdrop-blur-xl border-b border-border/50 z-50 shadow-card">
+    <header className="sticky top-0 bg-background/95 backdrop-blur-xl border-b border-border/50 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-          {/* Enhanced Logo */}
-          <div className="flex items-center space-x-3 group">
-            <div className="p-2 bg-primary/10 rounded-xl backdrop-blur-sm border border-primary/20 group-hover:scale-110 transition-transform duration-300">
-              <GraduationCap className="h-8 w-8 text-primary group-hover:rotate-12 transition-transform duration-300" />
+          {/* Refined Logo */}
+          <div className="flex items-center space-x-3">
+            <div className="p-2 bg-primary/10 rounded-xl">
+              <GraduationCap className="h-8 w-8 text-primary" />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+            <span className="text-2xl font-medium text-foreground">
               EduVirtual
             </span>
           </div>
 
-          {/* Enhanced Desktop Navigation */}
+          {/* Refined Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <a 
               href="#features" 
-              className="relative text-foreground hover:text-primary transition-all duration-300 font-medium group"
+              className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
               Recursos
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
             </a>
             <a 
               href="#about" 
-              className="relative text-foreground hover:text-primary transition-all duration-300 font-medium group"
+              className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
               Sobre
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
             </a>
             <a 
               href="#contact" 
-              className="relative text-foreground hover:text-primary transition-all duration-300 font-medium group"
+              className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
               Contato
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
             </a>
           </nav>
 
-          {/* Enhanced Desktop Buttons */}
+          {/* Refined Desktop Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             <Button 
               variant="ghost" 
-              className="font-medium hover:bg-primary/10 hover:text-primary transition-all duration-300"
+              className="font-medium"
               onClick={() => window.location.href = '/login'}
             >
               Entrar
             </Button>
             <Button 
               variant="hero" 
-              className="shadow-glow hover:scale-105 transition-all duration-300"
+              className="font-medium"
             >
               Começar Grátis
             </Button>
           </div>
 
-          {/* Enhanced Mobile Menu Button */}
+          {/* Refined Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-3 bg-primary/10 rounded-xl backdrop-blur-sm border border-primary/20 hover:bg-primary/20 transition-all duration-300"
+            className="md:hidden p-2 rounded-xl hover:bg-primary/10 transition-colors"
           >
             {isMenuOpen ? (
-              <X className="h-6 w-6 text-primary" />
+              <X className="h-6 w-6 text-foreground" />
             ) : (
-              <Menu className="h-6 w-6 text-primary" />
+              <Menu className="h-6 w-6 text-foreground" />
             )}
           </button>
         </div>
 
-        {/* Enhanced Mobile Menu */}
+        {/* Refined Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-6 border-t border-border/50 bg-background/95 backdrop-blur-sm rounded-b-2xl">
+          <div className="md:hidden py-6 border-t border-border/50">
             <nav className="flex flex-col space-y-6">
               <a 
                 href="#features" 
-                className="text-foreground hover:text-primary transition-all duration-300 font-medium hover:translate-x-2 inline-block"
+                className="text-foreground hover:text-primary transition-colors font-medium"
               >
-                → Recursos
+                Recursos
               </a>
               <a 
                 href="#about" 
-                className="text-foreground hover:text-primary transition-all duration-300 font-medium hover:translate-x-2 inline-block"
+                className="text-foreground hover:text-primary transition-colors font-medium"
               >
-                → Sobre
+                Sobre
               </a>
               <a 
                 href="#contact" 
-                className="text-foreground hover:text-primary transition-all duration-300 font-medium hover:translate-x-2 inline-block"
+                className="text-foreground hover:text-primary transition-colors font-medium"
               >
-                → Contato
+                Contato
               </a>
               <div className="flex flex-col space-y-3 pt-4 border-t border-border/30">
                 <Button 
                   variant="ghost" 
-                  className="justify-start font-medium hover:bg-primary/10"
+                  className="justify-start font-medium"
                   onClick={() => window.location.href = '/login'}
                 >
                   Entrar
                 </Button>
                 <Button 
                   variant="hero" 
-                  className="justify-start shadow-card"
+                  className="justify-start font-medium"
                 >
                   Começar Grátis
                 </Button>
