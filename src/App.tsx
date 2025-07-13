@@ -11,6 +11,7 @@ import RequireRole from "./components/RequireRole";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProfessorDashboard from "./pages/ProfessorDashboard";
 import AlunoDashboard from "./pages/AlunoDashboard";
+import Register from "./pages/Register";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +56,7 @@ function MainApp() {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/login" element={<Login onLogin={login} />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/portal" element={<PortalRedirect />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/professor" element={<ProfessorPage />} />

@@ -101,7 +101,7 @@ const UserTypesSection = () => {
               </ul>
 
               <Button 
-                variant={type.featured ? "hero" : "outline"} 
+                variant="hero"
                 className="w-full"
               >
                 Acessar {type.title}
