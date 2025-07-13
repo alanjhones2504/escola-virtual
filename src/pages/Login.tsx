@@ -6,9 +6,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Mail, Lock, GraduationCap } from "lucide-react";
 
 const mockUsers = [
-  { email: "aluno@escola.com", password: "123456", role: "aluno", name: "Aluno Exemplo" },
-  { email: "prof@escola.com", password: "123456", role: "professor", name: "Professor Exemplo" },
-  { email: "admin@escola.com", password: "123456", role: "admin", name: "Administrador Exemplo" },
+  { email: "aluno@escola.com", password: "654321", role: "aluno", name: "Aluno Exemplo" },
+  { email: "prof@escola.com", password: "654321", role: "professor", name: "Professor Exemplo" },
+  { email: "admin@escola.com", password: "654321", role: "admin", name: "Administrador Exemplo" },
 ];
 
 export type UserRole = "aluno" | "professor" | "admin";
