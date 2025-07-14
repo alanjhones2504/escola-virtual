@@ -13,14 +13,11 @@ const HeroSection = () => {
           <div className="space-y-8 text-center lg:text-left">
             
             <h1 className="text-5xl lg:text-6xl xl:text-7xl font-light text-foreground leading-tight tracking-tight">
-              O Futuro da
-              <span className="block font-medium bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Educação Digital
-              </span>
+              O Ensino Médio Digital do Futuro, Hoje!
             </h1>
             
             <p className="text-xl text-muted-foreground leading-relaxed font-light">
-              Plataforma completa que revoluciona a experiência educacional com elegância e simplicidade.
+              Plataforma completa para alunos, professores e gestores do Ensino Médio. Aulas, simulados, projetos e muito mais!
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center lg:justify-start">
