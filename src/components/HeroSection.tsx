@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { PlayCircle, Users, BookOpen, Award } from "lucide-react";
-import heroImage from "@/assets/hero-main.jpg";
+import heroImage from "@/assets/hero-education.jpg";
 import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
