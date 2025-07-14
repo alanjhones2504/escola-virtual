@@ -11,8 +11,10 @@ import {
   Calendar,
   Shield
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const FeaturesSection = () => {
+  const navigate = useNavigate();
   const features = [
     {
       icon: User,
@@ -116,7 +118,7 @@ const FeaturesSection = () => {
             <p className="text-muted-foreground mb-6 font-light">
               Experimente todos os recursos gratuitamente por 30 dias
             </p>
-            <Button variant="hero" size="lg">
+            <Button variant="hero" size="lg" onClick={() => navigate('/register')}>
               Iniciar Teste Gratuito
             </Button>
           </div>
