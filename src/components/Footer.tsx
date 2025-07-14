@@ -22,10 +22,10 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-medium text-background">Links Rápidos</h3>
             <ul className="space-y-3">
-              <li><a href="#features" className="text-background/70 hover:text-primary-glow transition-colors font-light">Recursos</a></li>
-              <li><a href="#about" className="text-background/70 hover:text-primary-glow transition-colors font-light">Sobre</a></li>
-              <li><a href="#contact" className="text-background/70 hover:text-primary-glow transition-colors font-light">Contato</a></li>
-              <li><a href="#" className="text-background/70 hover:text-primary-glow transition-colors font-light">Suporte</a></li>
+              <li><a href="#features" className="text-background/70 transition-colors font-light hover:hover-gradient">Recursos</a></li>
+              <li><a href="#about" className="text-background/70 transition-colors font-light hover:hover-gradient">Sobre</a></li>
+              <li><a href="#contact" className="text-background/70 transition-colors font-light hover:hover-gradient">Contato</a></li>
+              <li><a href="#" className="text-background/70 transition-colors font-light hover:hover-gradient">Suporte</a></li>
             </ul>
           </div>
 
@@ -33,10 +33,10 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-medium text-background">Serviços</h3>
             <ul className="space-y-3">
-              <li><a href="/login" className="text-background/70 hover:text-accent transition-colors font-light">Portal do Aluno</a></li>
-              <li><a href="/login" className="text-background/70 hover:text-accent transition-colors font-light">Portal do Professor</a></li>
-              <li><a href="/login" className="text-background/70 hover:text-accent transition-colors font-light">Portal Administrativo</a></li>
-              <li><a href="#" className="text-background/70 hover:text-accent transition-colors font-light">Suporte Técnico</a></li>
+              <li><a href="/login" className="text-background/70 transition-colors font-light hover:hover-gradient">Portal do Aluno</a></li>
+              <li><a href="/login" className="text-background/70 transition-colors font-light hover:hover-gradient">Portal do Professor</a></li>
+              <li><a href="/login" className="text-background/70 transition-colors font-light hover:hover-gradient">Portal Administrativo</a></li>
+              <li><a href="#" className="text-background/70 transition-colors font-light hover:hover-gradient">Suporte Técnico</a></li>
             </ul>
           </div>
 
@@ -66,10 +66,10 @@ const Footer = () => {
               © 2024 EduVirtual. Todos os direitos reservados.
             </p>
             <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-background/60 hover:text-primary-glow transition-colors font-light">
+              <a href="#" className="text-background/60 transition-colors font-light hover:hover-gradient">
                 Política de Privacidade
               </a>
-              <a href="#" className="text-background/60 hover:text-primary-glow transition-colors font-light">
+              <a href="#" className="text-background/60 transition-colors font-light hover:hover-gradient">
                 Termos de Uso
               </a>
             </div>

@@ -11,8 +11,10 @@ import {
 import studentsImage from "@/assets/students-learning.jpg";
 import teacherImage from "@/assets/teacher-tech.jpg";
 import adminImage from "@/assets/admin-dashboard.jpg";
+import { useNavigate } from "react-router-dom";
 
 const UserTypesSection = () => {
+  const navigate = useNavigate();
   const userTypes = [
     {
       icon: User,
@@ -92,9 +94,9 @@ const UserTypesSection = () => {
               {/* Image Header */}
               <div className="relative h-80 overflow-hidden">
                 <img 
-                  src={type.image}
+                  src={type.image} 
                   alt={`${type.title} Interface`}
-                  className={`w-full h-full object-cover ${type.title === 'Aluno' ? 'object-center' : 'object-top'}`}
+                  className={`w-full h-full object-cover ${type.title === 'Professor' ? 'object-[0_20%] md:object-top' : type.title === 'Aluno' ? 'object-center' : 'object-top'}`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-card/90 to-transparent"></div>
                 <div className="absolute bottom-4 left-6">
@@ -122,6 +124,11 @@ const UserTypesSection = () => {
                 <Button 
                   variant="hero"
                   className="w-full"
+                  onClick={() => {
+                    if (type.title === 'Aluno') navigate('/login');
+                    if (type.title === 'Professor') navigate('/login');
+                    if (type.title === 'Administrador') navigate('/login');
+                  }}
                 >
                   Acessar {type.title}
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -135,7 +142,9 @@ const UserTypesSection = () => {
           <p className="text-muted-foreground mb-6 font-light">
             Não sabe qual perfil escolher? Nossa equipe pode ajudar.
           </p>
-          <Button variant="outline" size="lg">
+          <Button variant="outline" size="lg"
+            onClick={() => window.open('https://wa.me/5585997509578', '_blank')}
+          >
             Falar com Especialista
           </Button>
         </div>

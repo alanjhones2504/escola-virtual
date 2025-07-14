@@ -13,7 +13,13 @@ const HeroSection = () => {
           <div className="space-y-8 text-center lg:text-left">
             
             <h1 className="text-5xl lg:text-6xl xl:text-7xl font-light text-foreground leading-tight tracking-tight">
-              O Ensino Médio Digital do Futuro, Hoje!
+              O Ensino Médio
+              <span className="block font-medium bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Digital
+              </span>
+              <span className="block font-medium bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                do Futuro, Hoje!
+              </span>
             </h1>
             
             <p className="text-xl text-muted-foreground leading-relaxed font-light">

@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useTheme } from "next-themes";
+import { Sun, Moon } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { GraduationCap, Menu, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { theme, setTheme } = useTheme();
 
   return (
     <header className="sticky top-0 bg-background/95 backdrop-blur-xl border-b border-border/50 z-50">
@@ -61,6 +65,15 @@ const Header = () => {
             </Button>
           </div>
 
+          {/* Theme Toggle */}
+          <button
+            className="p-2 rounded-xl hover:bg-primary/10 transition-colors"
+            aria-label="Alternar tema escuro/claro"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          >
+            {theme === 'dark' ? <Sun className="h-6 w-6 text-yellow-400" /> : <Moon className="h-6 w-6 text-blue-900" />}
+          </button>
+
           {/* Refined Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -111,6 +124,14 @@ const Header = () => {
                 >
                   Começar Agora
                 </Button>
+                {/* Theme Toggle Mobile */}
+                <button
+                  className="p-2 rounded-xl hover:bg-primary/10 transition-colors self-start"
+                  aria-label="Alternar tema escuro/claro"
+                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                >
+                  {theme === 'dark' ? <Sun className="h-6 w-6 text-yellow-400" /> : <Moon className="h-6 w-6 text-blue-900" />}
+                </button>
               </div>
             </nav>
           </div>

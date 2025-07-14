@@ -115,3 +115,12 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* Efeito de degradê para links no hover */
+.hover-gradient {
+  background: linear-gradient(90deg, hsl(217, 91%, 60%), hsl(142, 76%, 36%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: background 0.3s;
+}
