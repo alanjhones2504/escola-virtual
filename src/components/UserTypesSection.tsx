@@ -90,11 +90,11 @@ const UserTypesSection = () => {
               )}
               
               {/* Image Header */}
-              <div className="relative h-48 overflow-hidden">
+              <div className="relative h-80 overflow-hidden">
                 <img 
-                  src={type.image} 
+                  src={type.image}
                   alt={`${type.title} Interface`}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover ${type.title === 'Aluno' ? 'object-center' : 'object-top'}`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-card/90 to-transparent"></div>
                 <div className="absolute bottom-4 left-6">
