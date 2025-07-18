@@ -1,0 +1,99 @@
+:root {
+  --background: #0a0d14;
+  --foreground: #e1e7ef;
+  
+  --card: #111827;
+  --card-foreground: #e1e7ef;
+  
+  --popover: #111827;
+  --popover-foreground: #e1e7ef;
+  
+  --primary: #4f46e5;
+  --primary-foreground: #ffffff;
+  
+  --secondary: #1e293b;
+  --secondary-foreground: #e1e7ef;
+  
+  --muted: #334155;
+  --muted-foreground: #94a3b8;
+  
+  --accent: #1e293b;
+  --accent-foreground: #e1e7ef;
+  
+  --destructive: #ef4444;
+  --destructive-foreground: #f8fafc;
+  
+  --border: #1e293b;
+  --input: #1e293b;
+  --ring: #4f46e5;
+  
+  --radius: 0.5rem;
+}
+
+.bg-gradient-to-b {
+  background: linear-gradient(to bottom, #0a0d14, #111827);
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(to right, #4f46e5, #6366f1);
+}
+
+.bg-accent\/30 {
+  background-color: rgba(30, 41, 59, 0.3);
+}
+
+.bg-accent\/20 {
+  background-color: rgba(30, 41, 59, 0.2);
+}
+
+.bg-primary\/10 {
+  background-color: rgba(79, 70, 229, 0.1);
+}
+
+.shadow-card {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-elegant {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Classes de utilidade para fontes */
+.font-thin {
+  font-weight: 100;
+}
+
+.font-extralight {
+  font-weight: 200;
+}
+
+.font-light {
+  font-weight: 300;
+}
+
+.text-modern {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.025em;
+}
+
+/* Botão estilizado para o tema escuro */
+.btn-hero {
+  background: linear-gradient(to right, #4f46e5, #6366f1);
+  color: white;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.btn-hero:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* Estilo para cards */
+.card-dark {
+  background-color: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 0.5rem;
+}

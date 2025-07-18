@@ -13,8 +13,16 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ProfessorDashboard from "./pages/ProfessorDashboard";
 import AlunoDashboard from "./pages/AlunoDashboard";
 import Register from "./pages/Register";
+import { Loader2 } from "lucide-react";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 function AdminPage() {
   return (
@@ -49,8 +57,23 @@ function PortalRedirect() {
   return <Navigate to="/login" />;
 }
 
+function LoadingScreen() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="flex flex-col items-center gap-4">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        <p className="text-lg font-medium">Carregando...</p>
+      </div>
+    </div>
+  );
+}
+
 function MainApp() {
-  const { user, login, logout } = useAuth();
+  const { user, login, logout, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <BrowserRouter>
@@ -70,10 +93,16 @@ function MainApp() {
 
 function App() {
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <AuthProvider>
-        <MainApp />
-      </AuthProvider>
+    <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark">
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <AuthProvider>
+            <MainApp />
+            <Sonner position="top-right" closeButton />
+            <Toaster />
+          </AuthProvider>
+        </TooltipProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }

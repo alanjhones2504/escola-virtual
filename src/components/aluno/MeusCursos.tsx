@@ -1,67 +1,58 @@
-import React, { useState } from "react";
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { BookOpen, Clock, CheckCircle } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Course } from "@/services/api";
 
-const mockCursos = [
-  {
-    id: 1,
-    nome: "Matemática Básica",
-    descricao: "Conceitos fundamentais de matemática.",
-    materiais: [
-      { tipo: "Aula", titulo: "Números Inteiros", link: "#" },
-      { tipo: "PDF", titulo: "Apostila de Exercícios", link: "#" },
-    ],
-  },
-  {
-    id: 2,
-    nome: "História do Brasil",
-    descricao: "Principais eventos históricos do Brasil.",
-    materiais: [
-      { tipo: "Aula", titulo: "Independência do Brasil", link: "#" },
-      { tipo: "PDF", titulo: "Linha do Tempo", link: "#" },
-    ],
-  },
-];
+interface MeusCursosProps {
+  courses: Course[];
+}
 
-const MeusCursos: React.FC = () => {
-  const [cursoSelecionado, setCursoSelecionado] = useState<typeof mockCursos[0] | null>(null);
+const MeusCursos: React.FC<MeusCursosProps> = ({ courses }) => {
+  if (courses.length === 0) {
+    return (
+      <div className="text-center p-6 bg-accent/20 rounded-lg">
+        <BookOpen className="h-10 w-10 text-muted-foreground mx-auto mb-2" />
+        <h4 className="font-medium">Nenhum curso encontrado</h4>
+        <p className="text-sm text-muted-foreground">
+          Você ainda não está matriculado em nenhum curso.
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <h3 className="text-xl font-semibold mb-2">Meus Cursos</h3>
-      <ul className="mb-4">
-        {mockCursos.map((curso) => (
-          <li key={curso.id} className="mb-2">
-            <button
-              className="text-blue-700 underline hover:text-blue-900"
-              onClick={() => setCursoSelecionado(curso)}
-            >
-              {curso.nome}
-            </button>
-            <span className="ml-2 text-gray-600">{curso.descricao}</span>
-          </li>
-        ))}
-      </ul>
-      {cursoSelecionado && (
-        <div className="border rounded p-4 bg-gray-50">
-          <h4 className="text-lg font-bold mb-2">{cursoSelecionado.nome}</h4>
-          <p className="mb-2">{cursoSelecionado.descricao}</p>
-          <h5 className="font-semibold mb-1">Materiais:</h5>
-          <ul className="mb-2">
-            {cursoSelecionado.materiais.map((mat, idx) => (
-              <li key={idx} className="mb-1">
-                <span className="font-medium">[{mat.tipo}]</span> {mat.titulo} <a href={mat.link} className="text-blue-600 underline">Acessar</a>
-              </li>
-            ))}
-          </ul>
-          <button
-            className="mt-2 px-3 py-1 bg-gray-300 rounded hover:bg-gray-400"
-            onClick={() => setCursoSelecionado(null)}
-          >
-            Fechar
-          </button>
-        </div>
-      )}
+    <div className="space-y-4">
+      {courses.map((course) => (
+        <Card key={course.id} className="overflow-hidden border-0 bg-accent/30">
+          <CardContent className="p-4">
+            <div className="flex items-start justify-between">
+              <div>
+                <h4 className="font-semibold text-base">{course.title}</h4>
+                <p className="text-sm text-muted-foreground">{course.description}</p>
+              </div>
+              <div className="bg-primary/10 p-2 rounded-full">
+                <BookOpen className="h-4 w-4 text-primary" />
+              </div>
+            </div>
+            
+            <div className="mt-4">
+              <div className="flex justify-between text-sm mb-1">
+                <span>Progresso</span>
+                <span>{course.progress}%</span>
+              </div>
+              <Progress value={course.progress} className="h-2" />
+            </div>
+            
+            <div className="mt-4 flex items-center text-sm text-muted-foreground">
+              <Clock className="h-3 w-3 mr-1" />
+              <span>Próxima aula: {course.nextLesson}</span>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
     </div>
   );
 };
 
-export default MeusCursos; 
+export default MeusCursos;

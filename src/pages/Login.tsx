@@ -2,14 +2,10 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Lock, GraduationCap } from "lucide-react";
-
-const mockUsers = [
-  { email: "aluno@escola.com", password: "654321", role: "aluno", name: "Aluno Exemplo" },
-  { email: "prof@escola.com", password: "654321", role: "professor", name: "Professor Exemplo" },
-  { email: "admin@escola.com", password: "654321", role: "admin", name: "Administrador Exemplo" },
-];
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Mail, Lock, GraduationCap, Loader2 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { api } from "@/services/api";
 
 export type UserRole = "aluno" | "professor" | "admin";
 export type AuthUser = { email: string; role: UserRole; name: string };
@@ -22,42 +18,52 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const found = mockUsers.find(
-      (u) => u.email === email && u.password === password
-    );
-    if (found) {
-      setError("");
-      onLogin({ email: found.email, role: found.role as UserRole, name: found.name });
-    } else {
-      setError("E-mail ou senha inválidos.");
+    setError("");
+    setIsLoading(true);
+    
+    try {
+      const user = await api.login(email, password);
+      if (user) {
+        onLogin(user);
+        navigate("/portal");
+      } else {
+        setError("E-mail ou senha inválidos.");
+      }
+    } catch (err) {
+      setError("Ocorreu um erro ao fazer login. Tente novamente.");
+      console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-primary rounded-2xl mb-4 shadow-elegant">
-            <GraduationCap className="h-8 w-8 text-primary-foreground" />
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-2xl mb-4">
+            <GraduationCap className="h-8 w-8 text-primary" />
           </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">EduVirtual</h1>
+          <h1 className="text-3xl font-medium text-foreground mb-2 text-modern tracking-tight">EduVirtual</h1>
           <p className="text-muted-foreground">Acesse sua conta para continuar</p>
         </div>
 
-        <Card className="shadow-card border-0 bg-card/95 backdrop-blur-sm">
+        <Card className="shadow-card border border-border bg-card">
           <CardHeader className="space-y-1 pb-4">
-            <CardTitle className="text-2xl text-center">Login</CardTitle>
-            <CardDescription className="text-center">
+            <CardTitle className="text-2xl text-center text-foreground font-medium text-modern">Login</CardTitle>
+            <CardDescription className="text-center text-muted-foreground">
               Entre com suas credenciais
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium">
+                <Label htmlFor="email" className="text-sm font-medium text-foreground">
                   E-mail
                 </Label>
                 <div className="relative">
@@ -68,14 +74,15 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     placeholder="seu@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 h-12"
+                    className="pl-10 h-12 bg-background border-border text-foreground"
                     required
+                    disabled={isLoading}
                   />
                 </div>
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-medium">
+                <Label htmlFor="password" className="text-sm font-medium text-foreground">
                   Senha
                 </Label>
                 <div className="relative">
@@ -86,8 +93,9 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 h-12"
+                    className="pl-10 h-12 bg-background border-border text-foreground"
                     required
+                    disabled={isLoading}
                   />
                 </div>
               </div>
@@ -100,24 +108,38 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
               <Button
                 type="submit"
-                variant="hero"
-                size="lg"
-                className="w-full h-12 text-base font-medium"
+                className="w-full h-12 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 btn-hero"
+                disabled={isLoading}
               >
-                Entrar
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Entrando...
+                  </>
+                ) : (
+                  "Entrar"
+                )}
               </Button>
             </form>
 
             <div className="mt-6 text-center text-sm text-muted-foreground">
               <p>Contas de teste:</p>
               <div className="mt-2 space-y-1 text-xs">
-                <p><strong>Aluno:</strong> aluno@escola.com</p>
-                <p><strong>Professor:</strong> prof@escola.com</p>
-                <p><strong>Admin:</strong> admin@escola.com</p>
-                <p><strong>Senha:</strong> 123456</p>
+                <p><strong className="text-foreground">Aluno:</strong> aluno@escola.com</p>
+                <p><strong className="text-foreground">Professor:</strong> prof@escola.com</p>
+                <p><strong className="text-foreground">Admin:</strong> admin@escola.com</p>
+                <p><strong className="text-foreground">Senha:</strong> 123456</p>
               </div>
             </div>
           </CardContent>
+          <CardFooter className="flex justify-center border-t border-border pt-4">
+            <p className="text-sm text-muted-foreground">
+              Não tem uma conta?{" "}
+              <Link to="/register" className="text-primary hover:underline">
+                Cadastre-se
+              </Link>
+            </p>
+          </CardFooter>
         </Card>
       </div>
     </div>
