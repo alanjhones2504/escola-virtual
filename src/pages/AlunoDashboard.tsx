@@ -45,7 +45,7 @@ const AlunoDashboard: React.FC = () => {
           
           setCourses(coursesData);
           setTasks(tasksData);
-          setStats(statsData);
+          setStats(statsData as AlunoStats);
         } catch (error) {
           console.error("Erro ao carregar dados:", error);
           // Mostrar mensagem de erro para o usuário

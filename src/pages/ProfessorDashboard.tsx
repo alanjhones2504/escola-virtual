@@ -34,7 +34,7 @@ const ProfessorDashboard: React.FC = () => {
           
           // Buscar estatísticas
           const statsData = await api.getStats(user.role);
-          setStats(statsData);
+          setStats(statsData as ProfessorStats);
         } catch (error) {
           console.error("Erro ao carregar dados:", error);
           // Mostrar mensagem de erro para o usuário

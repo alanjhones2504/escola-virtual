@@ -19,7 +19,7 @@ const AdminDashboard: React.FC = () => {
         try {
           // Buscar estatísticas
           const statsData = await api.getStats(user.role);
-          setStats(statsData);
+          setStats(statsData as AdminStats);
         } catch (error) {
           console.error("Erro ao carregar dados:", error);
           // Mostrar mensagem de erro para o usuário
