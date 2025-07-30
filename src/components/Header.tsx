@@ -34,13 +34,13 @@ const Header = () => {
               Recursos
             </a>
             <a 
-              href="#about" 
+              href="#sobre" 
               className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
               Sobre
             </a>
             <a 
-              href="#contact" 
+              href="#contato" 
               className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
             >
               Contato
@@ -98,13 +98,13 @@ const Header = () => {
                 Recursos
               </a>
               <a 
-                href="#about" 
+                href="#sobre" 
                 className="text-foreground hover:text-primary transition-colors font-medium"
               >
                 Sobre
               </a>
               <a 
-                href="#contact" 
+                href="#contato" 
                 className="text-foreground hover:text-primary transition-colors font-medium"
               >
                 Contato
