@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, Lock, GraduationCap, Loader2 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { api } from "@/services/api";
+import { useNavigate } from "react-router-dom";
+import { api } from "../services/api";
 
 export type UserRole = "aluno" | "professor" | "admin";
 export type AuthUser = { email: string; role: UserRole; name: string };
@@ -24,6 +24,25 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    
+    // Validação básica
+    if (!email.trim()) {
+      setError("O e-mail é obrigatório.");
+      return;
+    }
+    
+    if (!password.trim()) {
+      setError("A senha é obrigatória.");
+      return;
+    }
+    
+    // Validação de formato de e-mail
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Formato de e-mail inválido.");
+      return;
+    }
+    
     setIsLoading(true);
     
     try {
@@ -43,27 +62,27 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-2xl mb-4">
-            <GraduationCap className="h-8 w-8 text-primary" />
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-primary rounded-2xl mb-4 shadow-elegant">
+            <GraduationCap className="h-8 w-8 text-primary-foreground" />
           </div>
-          <h1 className="text-3xl font-medium text-foreground mb-2 text-modern tracking-tight">EduVirtual</h1>
+          <h1 className="text-3xl font-bold text-foreground mb-2">EduVirtual</h1>
           <p className="text-muted-foreground">Acesse sua conta para continuar</p>
         </div>
 
-        <Card className="shadow-card border border-border bg-card">
+        <Card className="shadow-card border-0 bg-card/95 backdrop-blur-sm">
           <CardHeader className="space-y-1 pb-4">
-            <CardTitle className="text-2xl text-center text-foreground font-medium text-modern">Login</CardTitle>
-            <CardDescription className="text-center text-muted-foreground">
+            <CardTitle className="text-2xl text-center">Login</CardTitle>
+            <CardDescription className="text-center">
               Entre com suas credenciais
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium text-foreground">
+                <Label htmlFor="email" className="text-sm font-medium">
                   E-mail
                 </Label>
                 <div className="relative">
@@ -74,7 +93,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     placeholder="seu@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 h-12 bg-background border-border text-foreground"
+                    className="pl-10 h-12"
                     required
                     disabled={isLoading}
                   />
@@ -82,7 +101,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-medium text-foreground">
+                <Label htmlFor="password" className="text-sm font-medium">
                   Senha
                 </Label>
                 <div className="relative">
@@ -93,7 +112,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 h-12 bg-background border-border text-foreground"
+                    className="pl-10 h-12"
                     required
                     disabled={isLoading}
                   />
@@ -108,7 +127,9 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
               <Button
                 type="submit"
-                className="w-full h-12 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 btn-hero"
+                variant="hero"
+                size="lg"
+                className="w-full h-12 text-base font-medium"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -125,25 +146,17 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             <div className="mt-6 text-center text-sm text-muted-foreground">
               <p>Contas de teste:</p>
               <div className="mt-2 space-y-1 text-xs">
-                <p><strong className="text-foreground">Aluno:</strong> aluno@escola.com</p>
-                <p><strong className="text-foreground">Professor:</strong> prof@escola.com</p>
-                <p><strong className="text-foreground">Admin:</strong> admin@escola.com</p>
-                <p><strong className="text-foreground">Senha:</strong> 123456</p>
+                <p><strong>Aluno:</strong> aluno@escola.com</p>
+                <p><strong>Professor:</strong> prof@escola.com</p>
+                <p><strong>Admin:</strong> admin@escola.com</p>
+                <p><strong>Senha:</strong> 654321</p>
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex justify-center border-t border-border pt-4">
-            <p className="text-sm text-muted-foreground">
-              Não tem uma conta?{" "}
-              <Link to="/register" className="text-primary hover:underline">
-                Cadastre-se
-              </Link>
-            </p>
-          </CardFooter>
         </Card>
       </div>
     </div>
   );
 };
 
-export default Login; 
+export default Login;

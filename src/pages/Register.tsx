@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-import { GraduationCap, Mail, Lock, User, ArrowLeft, CheckCircle } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { GraduationCap, Mail, Lock, User, ArrowLeft, CheckCircle, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { UserRole } from "../pages/Login";
+import { api } from "@/services/api";
 
 // Esquema de validação com Zod
 const registerSchema = z.object({
@@ -39,12 +40,11 @@ const Register: React.FC = () => {
     },
   });
 
-  const onSubmit = (data: RegisterFormValues) => {
-    // Simulando um registro bem-sucedido
-    console.log("Dados do formulário:", data);
-    
-    // Em um cenário real, aqui seria feita uma chamada à API
-    setTimeout(() => {
+  const onSubmit = async (data: RegisterFormValues) => {
+    try {
+      // Registrar o usuário
+      await api.register(data.name, data.email, data.password, data.role);
+      
       setSuccess(true);
       toast.success("Cadastro realizado com sucesso!");
       
@@ -52,24 +52,27 @@ const Register: React.FC = () => {
       setTimeout(() => {
         navigate("/login");
       }, 2000);
-    }, 1000);
+    } catch (error) {
+      toast.error("Erro ao realizar cadastro. Tente novamente.");
+      console.error(error);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-subtle flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-2xl mb-4">
-            <GraduationCap className="h-8 w-8 text-primary" />
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-primary rounded-2xl mb-4 shadow-elegant">
+            <GraduationCap className="h-8 w-8 text-primary-foreground" />
           </div>
-          <h1 className="text-3xl font-medium text-foreground mb-2 text-modern tracking-tight">EduVirtual</h1>
+          <h1 className="text-3xl font-bold text-foreground mb-2">EduVirtual</h1>
           <p className="text-muted-foreground">Crie sua conta para começar</p>
         </div>
         
-        <Card className="shadow-card border border-border bg-card">
+        <Card className="shadow-card border-0 bg-card/95 backdrop-blur-sm">
           <CardHeader className="space-y-1 pb-4">
-            <CardTitle className="text-2xl text-center text-foreground font-medium text-modern">Cadastro</CardTitle>
-            <CardDescription className="text-center text-muted-foreground">
+            <CardTitle className="text-2xl text-center">Cadastro</CardTitle>
+            <CardDescription className="text-center">
               Preencha os dados abaixo para criar sua conta
             </CardDescription>
           </CardHeader>
@@ -77,11 +80,11 @@ const Register: React.FC = () => {
             {success ? (
               <div className="text-center py-8">
                 <div className="flex justify-center mb-4">
-                  <div className="bg-green-900/20 p-3 rounded-full">
-                    <CheckCircle className="h-8 w-8 text-green-500" />
+                  <div className="bg-green-100 p-3 rounded-full">
+                    <CheckCircle className="h-8 w-8 text-green-600" />
                   </div>
                 </div>
-                <h3 className="text-xl font-medium mb-2 text-foreground text-modern">Cadastro realizado!</h3>
+                <h3 className="text-xl font-semibold mb-2">Cadastro realizado!</h3>
                 <p className="text-muted-foreground mb-4">
                   Sua conta foi criada com sucesso. Você será redirecionado para a página de login.
                 </p>
@@ -94,13 +97,13 @@ const Register: React.FC = () => {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-foreground">Nome</FormLabel>
+                        <FormLabel>Nome</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               placeholder="Seu nome completo"
-                              className="pl-10 h-12 bg-background border-border text-foreground"
+                              className="pl-10 h-12"
                               {...field}
                             />
                           </div>
@@ -115,14 +118,14 @@ const Register: React.FC = () => {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-foreground">E-mail</FormLabel>
+                        <FormLabel>E-mail</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               placeholder="seu@email.com"
                               type="email"
-                              className="pl-10 h-12 bg-background border-border text-foreground"
+                              className="pl-10 h-12"
                               {...field}
                             />
                           </div>
@@ -137,14 +140,14 @@ const Register: React.FC = () => {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-foreground">Senha</FormLabel>
+                        <FormLabel>Senha</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                               placeholder="••••••••"
                               type="password"
-                              className="pl-10 h-12 bg-background border-border text-foreground"
+                              className="pl-10 h-12"
                               {...field}
                             />
                           </div>
@@ -159,14 +162,14 @@ const Register: React.FC = () => {
                     name="role"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-foreground">Tipo de Usuário</FormLabel>
+                        <FormLabel>Tipo de Usuário</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
-                            <SelectTrigger className="h-12 bg-background border-border text-foreground">
+                            <SelectTrigger className="h-12">
                               <SelectValue placeholder="Selecione um tipo" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent className="bg-card border-border text-foreground">
+                          <SelectContent>
                             <SelectItem value="aluno">Aluno</SelectItem>
                             <SelectItem value="professor">Professor</SelectItem>
                             <SelectItem value="admin">Administrador</SelectItem>
@@ -179,10 +182,19 @@ const Register: React.FC = () => {
                   
                   <Button
                     type="submit"
-                    className="w-full h-12 text-base font-medium mt-2 bg-primary text-primary-foreground hover:bg-primary/90 btn-hero"
+                    variant="hero"
+                    size="lg"
+                    className="w-full h-12 text-base font-medium mt-2"
                     disabled={form.formState.isSubmitting}
                   >
-                    {form.formState.isSubmitting ? "Cadastrando..." : "Cadastrar"}
+                    {form.formState.isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Cadastrando...
+                      </>
+                    ) : (
+                      "Cadastrar"
+                    )}
                   </Button>
                 </form>
               </Form>
@@ -200,4 +212,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register; 
+export default Register;

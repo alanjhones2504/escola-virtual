@@ -24,6 +24,17 @@ const queryClient = new QueryClient({
   },
 });
 
+function LoadingScreen() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="flex flex-col items-center gap-4">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        <p className="text-lg font-medium">Carregando...</p>
+      </div>
+    </div>
+  );
+}
+
 function AdminPage() {
   return (
     <RequireRole allowed="admin">
@@ -55,17 +66,6 @@ function PortalRedirect() {
   if (user.role === "professor") return <Navigate to="/professor" />;
   if (user.role === "aluno") return <Navigate to="/aluno" />;
   return <Navigate to="/login" />;
-}
-
-function LoadingScreen() {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="flex flex-col items-center gap-4">
-        <Loader2 className="h-12 w-12 animate-spin text-primary" />
-        <p className="text-lg font-medium">Carregando...</p>
-      </div>
-    </div>
-  );
 }
 
 function MainApp() {

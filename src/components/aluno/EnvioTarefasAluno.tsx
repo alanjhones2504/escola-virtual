@@ -5,6 +5,20 @@ import { Badge } from "@/components/ui/badge";
 import { Task } from "@/services/api";
 import { toast } from "sonner";
 
+// Função de utilidade para formatação de data
+const formatDate = (dateString: string): string => {
+  try {
+    const dateParts = dateString.split('-');
+    if (dateParts.length !== 3) {
+      return dateString; // Retorna a string original se não estiver no formato esperado
+    }
+    return `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+  } catch (error) {
+    console.error("Erro ao formatar data:", error);
+    return dateString; // Retorna a string original em caso de erro
+  }
+};
+
 interface EnvioTarefasAlunoProps {
   tasks: Task[];
 }
@@ -22,6 +36,14 @@ const EnvioTarefasAluno: React.FC<EnvioTarefasAlunoProps> = ({ tasks }) => {
     
     // Simulando o envio da tarefa
     setTimeout(() => {
+      // Atualizar o estado local para refletir a mudança
+      const updatedTasks = tasks.map(task => 
+        task.id === taskId 
+          ? { ...task, status: "submitted" as const } 
+          : task
+      );
+      
+      // Na implementação real, isso seria uma chamada à API
       toast.success("Tarefa enviada com sucesso!");
       setSubmitting(null);
     }, 1500);
@@ -45,21 +67,21 @@ const EnvioTarefasAluno: React.FC<EnvioTarefasAlunoProps> = ({ tasks }) => {
         <div className="flex space-x-2">
           <Badge 
             variant={filter === null ? "default" : "outline"} 
-            className={filter === null ? "" : "bg-background"}
+            className="cursor-pointer"
             onClick={() => setFilter(null)}
           >
             Todas
           </Badge>
           <Badge 
             variant={filter === "pending" ? "default" : "outline"} 
-            className={filter === "pending" ? "" : "bg-background"}
+            className="cursor-pointer"
             onClick={() => setFilter("pending")}
           >
             Pendentes
           </Badge>
           <Badge 
             variant={filter === "submitted" ? "default" : "outline"} 
-            className={filter === "submitted" ? "" : "bg-background"}
+            className="cursor-pointer"
             onClick={() => setFilter("submitted")}
           >
             Entregues
@@ -75,8 +97,7 @@ const EnvioTarefasAluno: React.FC<EnvioTarefasAlunoProps> = ({ tasks }) => {
         ) : (
           filteredTasks.map((task) => {
             // Converter a data para formato brasileiro
-            const dateParts = task.dueDate.split('-');
-            const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+            const formattedDate = formatDate(task.dueDate);
             
             return (
               <div

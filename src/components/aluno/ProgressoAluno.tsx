@@ -3,12 +3,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Award, TrendingUp, Clock, Calendar } from "lucide-react";
 
+import { AlunoStats } from "@/services/api";
+
 interface ProgressoAlunoProps {
-  stats: {
-    averageGrade: number;
-    attendance: number;
-    completedTasks: number;
-  } | null;
+  stats: AlunoStats | null;
 }
 
 const proximasAtividades = [

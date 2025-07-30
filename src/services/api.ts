@@ -27,6 +27,28 @@ export interface Task {
   grade?: number;
 }
 
+export interface AdminStats {
+  totalStudents: number;
+  totalTeachers: number;
+  totalCourses: number;
+  approvalRate: number;
+}
+
+export interface ProfessorStats {
+  totalStudents: number;
+  totalAssignments: number;
+  pendingGrading: number;
+  upcomingClasses: number;
+}
+
+export interface AlunoStats {
+  averageGrade: number;
+  attendance: number;
+  completedTasks: number;
+}
+
+export type Stats = AdminStats | ProfessorStats | AlunoStats;
+
 // Dados mockados
 const mockUsers: User[] = [
   { id: "1", name: "Aluno Exemplo", email: "aluno@escola.com", role: "aluno" },
@@ -103,7 +125,7 @@ export const api = {
   login: async (email: string, password: string): Promise<AuthUser | null> => {
     await delay(800);
     const user = mockUsers.find(u => u.email === email);
-    if (user) {
+    if (user && password === "123456") {
       return { email: user.email, name: user.name, role: user.role };
     }
     return null;
@@ -168,7 +190,7 @@ export const api = {
   },
   
   // Estatísticas
-  getStats: async (role: UserRole): Promise<any> => {
+  getStats: async (role: UserRole): Promise<Stats> => {
     await delay(700);
     if (role === "admin") {
       return {
